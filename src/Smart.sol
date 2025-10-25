@@ -23,6 +23,9 @@ contract SmartCoin is ERC20, ERC20Burnable, Ownable {
     // Mapping of admin addresses
     mapping(address => bool) private _admins;
     
+    // Count of active admins
+    uint256 private _adminCount;
+    
     // Pause state for transfers
     bool private _paused;
     
@@ -63,6 +66,7 @@ contract SmartCoin is ERC20, ERC20Burnable, Ownable {
     constructor(uint256 initialSupply) ERC20("Smart Coin", "SMART") Ownable(msg.sender) {
         // Add deployer as first admin
         _admins[msg.sender] = true;
+        _adminCount = 1;
         emit AdminAdded(msg.sender);
         
         // Mint initial supply to deployer
@@ -90,6 +94,7 @@ contract SmartCoin is ERC20, ERC20Burnable, Ownable {
         if (_admins[account]) revert AlreadyAdmin();
         
         _admins[account] = true;
+        _adminCount++;
         emit AdminAdded(account);
     }
     
@@ -99,8 +104,10 @@ contract SmartCoin is ERC20, ERC20Burnable, Ownable {
      */
     function removeAdmin(address account) external onlyAdmin {
         if (!_admins[account]) revert NotAnAdmin();
+        if (_adminCount <= 1) revert CannotRemoveLastAdmin();
         
         _admins[account] = false;
+        _adminCount--;
         emit AdminRemoved(account);
     }
     

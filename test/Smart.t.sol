@@ -108,6 +108,28 @@ contract SmartTest is Test {
         token.removeAdmin(user1);
     }
     
+    function test_RevertWhen_RemovingLastAdmin() public {
+        // Owner is the only admin initially
+        vm.expectRevert(SmartCoin.CannotRemoveLastAdmin.selector);
+        token.removeAdmin(owner);
+    }
+    
+    function test_CanRemoveAdminWhenMultipleExist() public {
+        // Add another admin
+        token.addAdmin(admin1);
+        
+        // Now we can remove owner since admin1 exists
+        token.removeAdmin(owner);
+        
+        assertFalse(token.isAdmin(owner));
+        assertTrue(token.isAdmin(admin1));
+        
+        // But cannot remove the last one
+        vm.prank(admin1);
+        vm.expectRevert(SmartCoin.CannotRemoveLastAdmin.selector);
+        token.removeAdmin(admin1);
+    }
+    
     function test_MultipleAdmins() public {
         token.addAdmin(admin1);
         token.addAdmin(admin2);
