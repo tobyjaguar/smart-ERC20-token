@@ -1,6 +1,7 @@
 # Compiler files
 cache/
 out/
+*.swp
 
 # Ignores development broadcast logs
 !/broadcast
@@ -12,3 +13,14 @@ docs/
 
 # Dotenv file
 .env
+
+# Node modules
+node_modules/
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# Mac
+.DS_Store
