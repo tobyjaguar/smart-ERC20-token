@@ -2,10 +2,10 @@
 pragma solidity ^0.8.27;
 
 import {Test, console} from "forge-std/Test.sol";
-import {Smart} from "../src/Smart.sol";
+import {SmartCoin} from "../src/Smart.sol";
 
 contract SmartTest is Test {
-    Smart public token;
+    SmartCoin public token;
     address public owner;
     address public admin1;
     address public admin2;
@@ -27,7 +27,7 @@ contract SmartTest is Test {
         user1 = makeAddr("user1");
         user2 = makeAddr("user2");
         
-        token = new Smart(INITIAL_SUPPLY);
+        token = new SmartCoin(INITIAL_SUPPLY);
     }
     
     /*//////////////////////////////////////////////////////////////
@@ -35,7 +35,7 @@ contract SmartTest is Test {
     //////////////////////////////////////////////////////////////*/
     
     function test_Deployment() public view {
-        assertEq(token.name(), "Smart");
+        assertEq(token.name(), "Smart Coin");
         assertEq(token.symbol(), "SMART");
         assertEq(token.decimals(), 0);
         assertEq(token.totalSupply(), INITIAL_SUPPLY);
@@ -48,7 +48,7 @@ contract SmartTest is Test {
     }
     
     function test_DeploymentWithZeroSupply() public {
-        Smart newToken = new Smart(0);
+        SmartCoin newToken = new SmartCoin(0);
         assertEq(newToken.totalSupply(), 0);
         assertEq(newToken.balanceOf(address(this)), 0);
         assertTrue(newToken.isAdmin(address(this)));
@@ -68,14 +68,14 @@ contract SmartTest is Test {
     
     function test_RevertWhen_NonAdminAddsAdmin() public {
         vm.prank(user1);
-        vm.expectRevert(Smart.NotAdmin.selector);
+        vm.expectRevert(SmartCoin.NotAdmin.selector);
         token.addAdmin(admin1);
     }
     
     function test_RevertWhen_AddingExistingAdmin() public {
         token.addAdmin(admin1);
         
-        vm.expectRevert(Smart.AlreadyAdmin.selector);
+        vm.expectRevert(SmartCoin.AlreadyAdmin.selector);
         token.addAdmin(admin1);
     }
     
@@ -99,12 +99,12 @@ contract SmartTest is Test {
         token.addAdmin(admin1);
         
         vm.prank(user1);
-        vm.expectRevert(Smart.NotAdmin.selector);
+        vm.expectRevert(SmartCoin.NotAdmin.selector);
         token.removeAdmin(admin1);
     }
     
     function test_RevertWhen_RemovingNonAdmin() public {
-        vm.expectRevert(Smart.NotAnAdmin.selector);
+        vm.expectRevert(SmartCoin.NotAnAdmin.selector);
         token.removeAdmin(user1);
     }
     
@@ -143,7 +143,7 @@ contract SmartTest is Test {
     
     function test_RevertWhen_NonAdminMints() public {
         vm.prank(user1);
-        vm.expectRevert(Smart.NotAdmin.selector);
+        vm.expectRevert(SmartCoin.NotAdmin.selector);
         token.mint(user1, 100);
     }
     
@@ -248,7 +248,7 @@ contract SmartTest is Test {
     
     function test_RevertWhen_NonAdminPauses() public {
         vm.prank(user1);
-        vm.expectRevert(Smart.NotAdmin.selector);
+        vm.expectRevert(SmartCoin.NotAdmin.selector);
         token.pause();
     }
     
@@ -256,7 +256,7 @@ contract SmartTest is Test {
         token.pause();
         
         vm.prank(user1);
-        vm.expectRevert(Smart.NotAdmin.selector);
+        vm.expectRevert(SmartCoin.NotAdmin.selector);
         token.unpause();
     }
     
@@ -265,7 +265,7 @@ contract SmartTest is Test {
         token.pause();
         
         vm.prank(user1);
-        vm.expectRevert(Smart.TransfersPaused.selector);
+        vm.expectRevert(SmartCoin.TransfersPaused.selector);
         token.transfer(user2, 50);
     }
     
@@ -278,7 +278,7 @@ contract SmartTest is Test {
         token.pause();
         
         vm.prank(user2);
-        vm.expectRevert(Smart.TransfersPaused.selector);
+        vm.expectRevert(SmartCoin.TransfersPaused.selector);
         token.transferFrom(user1, user2, 50);
     }
     
@@ -393,7 +393,7 @@ contract SmartTest is Test {
         
         // 5. Transfers should fail
         vm.prank(user1);
-        vm.expectRevert(Smart.TransfersPaused.selector);
+        vm.expectRevert(SmartCoin.TransfersPaused.selector);
         token.transfer(user2, 10);
         
         // 6. Admin1 unpauses

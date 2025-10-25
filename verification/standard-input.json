@@ -1,0 +1,37 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "src/Smart.sol": {
+      "content": ""
+    }
+  },
+  "settings": {
+    "remappings": [
+      "@openzeppelin/=lib/openzeppelin-contracts/"
+    ],
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "metadata": {
+      "bytecodeHash": "ipfs"
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "evmVersion": "cancun",
+    "libraries": {}
+  }
+}
+

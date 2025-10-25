@@ -2,11 +2,11 @@
 pragma solidity ^0.8.27;
 
 import {Script, console} from "forge-std/Script.sol";
-import {Smart} from "../src/Smart.sol";
+import {SmartCoin} from "../src/Smart.sol";
 
 /**
  * @title Deploy
- * @dev Deployment script for Smart token contract
+ * @dev Deployment script for SmartCoin token contract
  * 
  * Usage:
  * 
@@ -23,17 +23,17 @@ contract Deploy is Script {
     // Initial supply: 1000 SMART tokens
     uint256 constant INITIAL_SUPPLY = 1000;
     
-    function run() external returns (Smart) {
+    function run() external returns (SmartCoin) {
         // Get the deployer's private key from environment
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
         
         // Start broadcasting transactions
         vm.startBroadcast(deployerPrivateKey);
         
-        // Deploy the Smart token contract
-        Smart token = new Smart(INITIAL_SUPPLY);
+        // Deploy the SmartCoin token contract
+        SmartCoin token = new SmartCoin(INITIAL_SUPPLY);
         
-        console.log("Smart token deployed at:", address(token));
+        console.log("SmartCoin token deployed at:", address(token));
         console.log("Deployer address:", vm.addr(deployerPrivateKey));
         console.log("Initial supply:", token.totalSupply());
         console.log("Deployer is admin:", token.isAdmin(vm.addr(deployerPrivateKey)));

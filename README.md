@@ -14,18 +14,21 @@ An ERC-20 token contract designed as a reward token for the "My Daily Trivia" Fa
 ## Features
 
 ### Core Functionality
+
 - ✅ ERC-20 compliant token
 - ✅ Zero decimals - whole tokens only (1 SMART = 1, not 1e18)
 - ✅ Dynamic supply with no maximum cap
 - ✅ Minting and burning capabilities
 
 ### Admin Controls
+
 - ✅ Multi-admin whitelist system
 - ✅ Admins can add/remove other admins
 - ✅ Only admins can mint new tokens
 - ✅ Deployer is automatically the first admin
 
 ### Security Features
+
 - ✅ Pausable transfers for emergency situations
 - ✅ Burning capability for token holders and admins
 - ✅ Access control for sensitive functions
@@ -33,7 +36,7 @@ An ERC-20 token contract designed as a reward token for the "My Daily Trivia" Fa
 
 ## Project Structure
 
-```
+```md
 smart-token/
 ├── src/
 │   └── Smart.sol           # Main token contract
@@ -53,17 +56,20 @@ smart-token/
 ## Installation
 
 1. Clone the repository:
+2. 
 ```bash
 git clone <your-repo-url>
 cd smart-token
 ```
 
-2. Install dependencies:
+1. Install dependencies:
+  
 ```bash
 forge install
 ```
 
-3. Build the contracts:
+1. Build the contracts:
+
 ```bash
 forge build
 ```
@@ -71,21 +77,25 @@ forge build
 ## Testing
 
 Run the complete test suite (37 tests):
+
 ```bash
 forge test
 ```
 
 Run tests with detailed output:
+
 ```bash
 forge test -vvv
 ```
 
 Run tests with gas reporting:
+
 ```bash
 forge test --gas-report
 ```
 
 Run specific test:
+
 ```bash
 forge test --match-test test_DailyRewardScenario
 ```
@@ -93,6 +103,7 @@ forge test --match-test test_DailyRewardScenario
 ### Test Coverage
 
 The test suite includes:
+
 - Deployment and initialization tests
 - Admin management (add/remove admins)
 - Minting functionality and access control
@@ -146,6 +157,7 @@ forge script script/Deploy.s.sol:Deploy \
 ### Dry Run (Simulation)
 
 Test deployment without broadcasting:
+
 ```bash
 forge script script/Deploy.s.sol:Deploy --rpc-url $BASE_SEPOLIA_RPC_URL
 ```
@@ -155,12 +167,15 @@ forge script script/Deploy.s.sol:Deploy --rpc-url $BASE_SEPOLIA_RPC_URL
 ### Admin Functions
 
 #### Add Admin
+
 ```solidity
 function addAdmin(address account) external onlyAdmin
 ```
+
 Adds a new admin to the contract.
 
 **Example:**
+
 ```bash
 cast send <CONTRACT_ADDRESS> "addAdmin(address)" <NEW_ADMIN_ADDRESS> \
   --rpc-url $BASE_RPC_URL \
@@ -168,17 +183,21 @@ cast send <CONTRACT_ADDRESS> "addAdmin(address)" <NEW_ADMIN_ADDRESS> \
 ```
 
 #### Remove Admin
+
 ```solidity
 function removeAdmin(address account) external onlyAdmin
 ```
+
 Removes an admin from the contract.
 
 #### Check Admin Status
+
 ```solidity
 function isAdmin(address account) external view returns (bool)
 ```
 
 **Example:**
+
 ```bash
 cast call <CONTRACT_ADDRESS> "isAdmin(address)" <ADDRESS_TO_CHECK> \
   --rpc-url $BASE_RPC_URL
@@ -189,9 +208,11 @@ cast call <CONTRACT_ADDRESS> "isAdmin(address)" <ADDRESS_TO_CHECK> \
 ```solidity
 function mint(address to, uint256 amount) external onlyAdmin
 ```
+
 Mints new tokens to a specified address. Only callable by admins.
 
 **Example - Mint 1000 tokens to hot wallet:**
+
 ```bash
 cast send <CONTRACT_ADDRESS> "mint(address,uint256)" <HOT_WALLET_ADDRESS> 1000 \
   --rpc-url $BASE_RPC_URL \
@@ -207,6 +228,7 @@ function paused() external view returns (bool)
 ```
 
 **Pause transfers:**
+
 ```bash
 cast send <CONTRACT_ADDRESS> "pause()" \
   --rpc-url $BASE_RPC_URL \
@@ -214,6 +236,7 @@ cast send <CONTRACT_ADDRESS> "pause()" \
 ```
 
 **Unpause transfers:**
+
 ```bash
 cast send <CONTRACT_ADDRESS> "unpause()" \
   --rpc-url $BASE_RPC_URL \
@@ -221,6 +244,7 @@ cast send <CONTRACT_ADDRESS> "unpause()" \
 ```
 
 **Check pause status:**
+
 ```bash
 cast call <CONTRACT_ADDRESS> "paused()" --rpc-url $BASE_RPC_URL
 ```
@@ -228,12 +252,14 @@ cast call <CONTRACT_ADDRESS> "paused()" --rpc-url $BASE_RPC_URL
 ### Standard ERC-20 Functions
 
 **Check balance:**
+
 ```bash
 cast call <CONTRACT_ADDRESS> "balanceOf(address)" <ADDRESS> \
   --rpc-url $BASE_RPC_URL
 ```
 
 **Transfer tokens:**
+
 ```bash
 cast send <CONTRACT_ADDRESS> "transfer(address,uint256)" <TO_ADDRESS> <AMOUNT> \
   --rpc-url $BASE_RPC_URL \
@@ -241,11 +267,13 @@ cast send <CONTRACT_ADDRESS> "transfer(address,uint256)" <TO_ADDRESS> <AMOUNT> \
 ```
 
 **Check total supply:**
+
 ```bash
 cast call <CONTRACT_ADDRESS> "totalSupply()" --rpc-url $BASE_RPC_URL
 ```
 
 **Burn tokens:**
+
 ```bash
 cast send <CONTRACT_ADDRESS> "burn(uint256)" <AMOUNT> \
   --rpc-url $BASE_RPC_URL \
@@ -328,6 +356,7 @@ await token.unpause();
 ## Gas Optimization
 
 The contract uses:
+
 - Custom errors instead of strings (saves gas)
 - Efficient storage patterns
 - OpenZeppelin's optimized implementations
@@ -344,16 +373,19 @@ The contract uses:
 ## Development
 
 ### Format Code
+
 ```bash
 forge fmt
 ```
 
 ### Check Coverage
+
 ```bash
 forge coverage
 ```
 
 ### Generate Gas Snapshot
+
 ```bash
 forge snapshot
 ```
@@ -369,6 +401,7 @@ For issues, questions, or contributions, please open an issue on the GitHub repo
 ## Changelog
 
 ### v1.0.0 (Initial Release)
+
 - ERC-20 token with 0 decimals
 - Admin whitelist management
 - Pausable transfers

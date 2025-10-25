@@ -6,9 +6,9 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 /**
- * @title Smart
+ * @title SmartCoin
  * @dev ERC20 token with admin controls, pausable transfers, and dynamic supply
- * Token name: Smart
+ * Token name: Smart Coin
  * Token symbol: SMART
  * Decimals: 0 (non-divisible whole tokens)
  * 
@@ -19,7 +19,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
  * - Burning capability for admins and token holders
  * - Dynamic supply with incremental minting
  */
-contract Smart is ERC20, ERC20Burnable, Ownable {
+contract SmartCoin is ERC20, ERC20Burnable, Ownable {
     // Mapping of admin addresses
     mapping(address => bool) private _admins;
     
@@ -56,11 +56,11 @@ contract Smart is ERC20, ERC20Burnable, Ownable {
     }
     
     /**
-     * @dev Constructor that initializes the token with name "Smart" and symbol "SMART"
+     * @dev Constructor that initializes the token with name "Smart Coin" and symbol "SMART"
      * Mints initial supply to the deployer and adds deployer as the first admin
      * @param initialSupply The initial supply of tokens to mint to the deployer
      */
-    constructor(uint256 initialSupply) ERC20("Smart", "SMART") Ownable(msg.sender) {
+    constructor(uint256 initialSupply) ERC20("Smart Coin", "SMART") Ownable(msg.sender) {
         // Add deployer as first admin
         _admins[msg.sender] = true;
         emit AdminAdded(msg.sender);
